@@ -1,45 +1,40 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int fun(int index,vector<int> &v,vector<int> &arr,int n,int sum,int k){
-    if(index >= n && sum == k){
-        /*for(int i=0;i<arr.size();i++){
-            cout<<arr[i]<<" ";
-        }*/
-        //flag = true;
-        return 1;
-    }
-    else if(index >= n && sum != k){
-        return 0;
+ string fun(string s,string s1,int index,int n){
+        if(index >= n){
+            string s2;
+            s2 = s1;
+            reverse(s2.begin(),s2.end());
+            if(s1 == s2){
+                return s1;
+            }
+            else{
+                return 0;
+            }
+        }
+        s1.push_back(s[index]);
+        string left = fun(s,s1,index+1,n);
+        s1.pop_back();
+        string right = fun(s,s1,index+1,n);
+        if(right.size() > left.size()){
+            return right;
+        }
+        else{
+            return left;
+        }
     }
     
-    arr.push_back(v[index]);
-    sum = sum + v[index];
-    int l = fun(index+1,v,arr,n,sum,k);
-    arr.pop_back();
-    sum = sum - v[index];
-    int r = fun(index+1,v,arr,n,sum,k);
-    return l+r;
-    /*if(flag == false){
-        arr.push_back(v[index]);
-        sum = sum + v[index];
-        fun(index+1,v,arr,n,sum,k,flag);
-        arr.pop_back();
-        sum = sum - v[index];
-        fun(index+1,v,arr,n,sum,k,flag);
-    }*/
-}
+    string longestPalindrome(string s) {
+        int n =  s.size();
+        int index = 0;
+        string s1;
+        return fun(s,s1,index,n);
+    }
+
 
 int main(){
-    int n;
-    cin>>n;
-    vector<int> v(n);
-    for(int i=0;i<n;i++){
-        cin>>v[i];
-    }
-    vector<int> arr;
-    int k;
-    cin>>k;
-    //bool flag = false;
-    cout<<fun(0,v,arr,n,0,k);
+    string s;
+    cin>>s;
+    cout<<longestPalindrome(s);
 }
